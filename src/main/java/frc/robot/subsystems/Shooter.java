@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.music.Orchestra;
+// import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -124,7 +125,7 @@ public class Shooter extends SubsystemBase {
   }
 
    public void lowerNote() {
-    StatusSignal<Double> pos = indexerMotor.getPosition();
+    StatusSignal<Angle> pos = indexerMotor.getPosition();
     indexerMotor.setPosition(pos.getValueAsDouble() -2);
   }
 
@@ -149,7 +150,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 shoot(shooterSpeed);
             })
-        .until(() -> { return rightShooterMotor.getVelocity().getValue() > 25;}) //.97
+        .until(() -> { return rightShooterMotor.getVelocity().getValueAsDouble() > 25;}) //.97
         .withName("SetShooterSpeed RUN");
   }
 
@@ -304,7 +305,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.16); // 0.06
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.15;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.15;});
       }
 
       public Command smartIntakePositionCommand() {
@@ -312,7 +313,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.0225); // 0.06
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.0175 && angleEncoder.getAbsolutePosition().getValue() < 0.0275;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.0175 && angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.0275;});
       }
 
       public Command autoLastNotePosition() {
@@ -320,7 +321,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.0598); // .051 // .062
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.033;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.033;});
       }
 
       public Command autoThirdNotePosition() {
@@ -328,7 +329,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.060); // .043
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.040;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.040;});
       }
 
       public Command autoSecondNotePosition() {
@@ -336,7 +337,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.0578); // .058
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.033;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.033;});
       }
 
       public Command autoShaneNotePosition() {
@@ -344,7 +345,7 @@ public class Shooter extends SubsystemBase {
             () -> {
                 setAnglePosition(.078); // .078
             }
-        ).until(() -> {return angleEncoder.getAbsolutePosition().getValue() > 0.06;});
+        ).until(() -> {return angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.06;});
       }
 
       public Command climb() {
@@ -438,13 +439,13 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Rotation2d rotations = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
-    Rotation2d motorRotations = Rotation2d.fromRotations(leftShooterAngleMotor.getPosition().getValue());
+    Rotation2d rotations = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
+    Rotation2d motorRotations = Rotation2d.fromRotations(leftShooterAngleMotor.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("ShooterAngle", rotations.getDegrees());
     // double motorVelocity = rightShooterAngleMotor.getVelocity().getValue();
     SmartDashboard.putNumber("ShooterIntakeAngle", rotations.getDegrees());
     SmartDashboard.putNumber("ShooterIntakeAngleEncoder", motorRotations.getDegrees());
-    SmartDashboard.putNumber("ShooterMotorVelocity", rightShooterAngleMotor.getVelocity().getValue());
+    SmartDashboard.putNumber("ShooterMotorVelocity", rightShooterAngleMotor.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("TimeOfFlightSensor", TOF.getRange());
     SmartDashboard.putNumber("RatchetPosition", rotations.getDegrees());
     SmartDashboard.putNumber("Angle to goal", calculateAngleToSpeaker());

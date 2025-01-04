@@ -1,11 +1,11 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.MutableMeasure.mutable;
+// import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
-import com.ctre.phoenix.music.Orchestra;
+// import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -17,11 +17,11 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Velocity;
-import edu.wpi.first.units.Voltage;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -40,11 +40,11 @@ public class Intake extends SubsystemBase {
     
 
     // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
-  private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
-  // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
-  private final MutableMeasure<Distance> m_distance = mutable(Meters.of(0));
-  // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
-  private final MutableMeasure<Velocity<Distance>> m_velocity = mutable(MetersPerSecond.of(0));
+//   private final MutVoltage m_appliedVoltage = mutable(Volts.of(0));
+//   // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
+//   private final MutDistance m_distance = mutable(Meters.of(0));
+//   // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
+//   private final MutLinearVelocity m_velocity = mutable(MetersPerSecond.of(0));
     
     public Intake() {
         intakeMotor = new TalonFX(56);
@@ -93,7 +93,7 @@ public class Intake extends SubsystemBase {
     public Command setIntakeSpeedCommand() {
         return runOnce(
                 () -> {
-                if (angleEncoder.getAbsolutePosition().getValue() < 0.145) {
+                if (angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.145) {
                     intakeSpeed = 0;
                 } else {
                     intakeSpeed = 0.8;
@@ -191,9 +191,9 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        Rotation2d rotations = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
-        Rotation2d motorRotations = Rotation2d.fromRotations(angleMotor.getPosition().getValue());
-        double motorVelocity = angleMotor.getVelocity().getValue();
+        Rotation2d rotations = Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
+        Rotation2d motorRotations = Rotation2d.fromRotations(angleMotor.getPosition().getValueAsDouble());
+        double motorVelocity = angleMotor.getVelocity().getValueAsDouble();
         SmartDashboard.putNumber("IntakeAngle", rotations.getDegrees());
         SmartDashboard.putNumber("IntakeAngleEncoder", motorRotations.getDegrees());
         SmartDashboard.putNumber("MotorVelocity", motorVelocity);

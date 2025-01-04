@@ -2,8 +2,8 @@ package frc.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.music.Orchestra;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
+// import com.ctre.phoenix.music.Orchestra;
+// import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -292,7 +292,7 @@ public class RobotContainer {
         
         driver.rightTrigger(0.5).whileTrue((
             new InstantCommand(() -> {
-                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.135) {
+                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.135) {
                     shooterSubsystem.setAnglePosition(0.015);//.015
                 }
             })
@@ -302,7 +302,7 @@ public class RobotContainer {
             .finallyDo(() -> {
                 shooterSubsystem.load(0);
                 shooterSubsystem.shoot(0);
-                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.135) {
+                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.135) {
                     shooterSubsystem.setAnglePosition(0);
                 }
             
@@ -334,9 +334,9 @@ public class RobotContainer {
 
     public Command transform() {
         return shooterSubsystem.deploy()
-            .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() > 0.125;}) //0.13
+            .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.125;}) //0.13
             .andThen(intakeSubsystem.deploy())
-            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValue() > 0.33;})
+            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.33;})
             .andThen(shooterSubsystem.stow())
             .withName("OUT (TRANSFORM)");
             // .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.05;});
@@ -345,16 +345,16 @@ public class RobotContainer {
     // Deprecated
     public Command stow() {
         return shooterSubsystem.deploy()
-            .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() > 0.13;}) 
+            .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() > 0.13;}) 
             .andThen(intakeSubsystem.stow())
-            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.05;})
+            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.05;})
             .andThen(shooterSubsystem.stow());
             // .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.05;})
     }
 
     public Command stowParallel() {
         return new ParallelCommandGroup(shooterSubsystem.deploy(), intakeSubsystem.stow())
-            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.05;}) // 0.05 // WIP
+            .until(() -> {return intakeSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.05;}) // 0.05 // WIP
             .andThen(shooterSubsystem.stow());
             // .until(() -> {return shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.05;})
     }
@@ -512,7 +512,7 @@ public class RobotContainer {
     public Command startShoot() {
             return
             new InstantCommand(() -> {
-                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValue() < 0.135) {
+                if (shooterSubsystem.angleEncoder.getAbsolutePosition().getValueAsDouble() < 0.135) {
                     shooterSubsystem.setAnglePosition(0.015);//.015
                 }
             })

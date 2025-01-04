@@ -12,7 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Value;
 
-import com.ctre.phoenix.music.Orchestra;
+// import com.ctre.phoenix.music.Orchestra;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
@@ -37,14 +37,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import edu.wpi.first.units.Voltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Distance;
-import edu.wpi.first.units.Velocity;
+// import static edu.wpi.first.units.MutableMeasure.mutable;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.MutDistance;
+import edu.wpi.first.units.measure.MutLinearVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Velocity;
 
 import static edu.wpi.first.units.Units.Volts;
-import static edu.wpi.first.units.MutableMeasure.mutable;
+// import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Meters;
 
 
@@ -55,7 +59,7 @@ public class Swerve extends SubsystemBase {
 
     // Creates a SysIdRoutine
 
-    public void voltageDrive(Measure<Voltage> volts) {
+    public void voltageDrive(Voltage volts) {
         for (SwerveModule mod : mSwerveMods) {
             mod.setSpeed(volts);
             mod.mAngleMotor.setControl(mod.anglePosition.withPosition(0));
@@ -66,11 +70,11 @@ public class Swerve extends SubsystemBase {
         
     }
 
-    private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
+    // private final MutVoltage m_appliedVoltage = mutable(Volts.of(0));
 
-    private final MutableMeasure<Distance> m_distance = mutable(Meters.of(0));
+    // private final MutDistance m_distance = mutable(Meters.of(0));
 
-    private final MutableMeasure<Velocity<Distance>> m_velocity = mutable(MetersPerSecond.of(0));
+    // private final MutLinearVelocity m_velocity = mutable(MetersPerSecond.of(0));
 
     public SysIdRoutine routine = new SysIdRoutine(
     new SysIdRoutine.Config(
