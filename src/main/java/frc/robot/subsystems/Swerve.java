@@ -55,7 +55,6 @@ import static edu.wpi.first.units.Units.Volts;
 // import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Meters;
 
-
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
@@ -71,7 +70,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void logMotors() {
-        
+
     }
 
     // private final MutVoltage m_appliedVoltage = mutable(Volts.of(0));
@@ -81,49 +80,59 @@ public class Swerve extends SubsystemBase {
     // private final MutLinearVelocity m_velocity = mutable(MetersPerSecond.of(0));
 
     public SysIdRoutine routine = new SysIdRoutine(
-    new SysIdRoutine.Config(
-        null,
-        null,
-        null,
+            new SysIdRoutine.Config(
+                    null,
+                    null,
+                    null,
 
-        (state)->SignalLogger.writeString("state", state.toString())
-    ),
-    new SysIdRoutine.Mechanism(this::voltageDrive,
-    null
-    // log -> {        
-    //     SwerveModule mod = mSwerveMods[0];
-    //     double voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
-    //     log.motor("frontLeft")
-    //         .voltage(m_appliedVoltage.mut_replace(voltage * RobotController.getBatteryVoltage(), Volts))
-    //         .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(), Meters))
-    //         .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(), MetersPerSecond));
+                    (state) -> SignalLogger.writeString("state", state.toString())),
+            new SysIdRoutine.Mechanism(this::voltageDrive,
+                    null
+                    // log -> {
+                    // SwerveModule mod = mSwerveMods[0];
+                    // double voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
+                    // log.motor("frontLeft")
+                    // .voltage(m_appliedVoltage.mut_replace(voltage *
+                    // RobotController.getBatteryVoltage(), Volts))
+                    // .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(),
+                    // Meters))
+                    // .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(),
+                    // MetersPerSecond));
 
-    //     mod = mSwerveMods[1];
-    //     voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
-    //     log.motor("frontRight")
-    //         .voltage(m_appliedVoltage.mut_replace(voltage * RobotController.getBatteryVoltage(), Volts))
-    //         .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(), Meters))
-    //         .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(), MetersPerSecond));
-        
-    //     mod = mSwerveMods[2];
-    //     voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
-    //     log.motor("backLeft")
-    //         .voltage(m_appliedVoltage.mut_replace(voltage * RobotController.getBatteryVoltage(), Volts))
-    //         .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(), Meters))
-    //         .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(), MetersPerSecond));
-        
-    //     mod = mSwerveMods[3];
-    //     voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
-    //     log.motor("backRight")
-    //         .voltage(m_appliedVoltage.mut_replace(voltage * RobotController.getBatteryVoltage(), Volts))
-    //         .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(), Meters))
-    //         .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(), MetersPerSecond));
+                    // mod = mSwerveMods[1];
+                    // voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
+                    // log.motor("frontRight")
+                    // .voltage(m_appliedVoltage.mut_replace(voltage *
+                    // RobotController.getBatteryVoltage(), Volts))
+                    // .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(),
+                    // Meters))
+                    // .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(),
+                    // MetersPerSecond));
 
-    // }
-    , this)
+                    // mod = mSwerveMods[2];
+                    // voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
+                    // log.motor("backLeft")
+                    // .voltage(m_appliedVoltage.mut_replace(voltage *
+                    // RobotController.getBatteryVoltage(), Volts))
+                    // .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(),
+                    // Meters))
+                    // .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(),
+                    // MetersPerSecond));
 
-);
+                    // mod = mSwerveMods[3];
+                    // voltage = mod.mDriveMotor.getMotorVoltage().getValueAsDouble();
+                    // log.motor("backRight")
+                    // .voltage(m_appliedVoltage.mut_replace(voltage *
+                    // RobotController.getBatteryVoltage(), Volts))
+                    // .linearPosition(m_distance.mut_replace(mod.mDriveMotor.getPosition().getValueAsDouble(),
+                    // Meters))
+                    // .linearVelocity(m_velocity.mut_replace(mod.mDriveMotor.getVelocity().getValueAsDouble(),
+                    // MetersPerSecond));
 
+                    // }
+                    , this)
+
+    );
 
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
         return routine.quasistatic(direction);
@@ -139,72 +148,82 @@ public class Swerve extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, "torch");
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
-        
+
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants), // front left
-            new SwerveModule(1, Constants.Swerve.Mod1.constants), // front right
-            new SwerveModule(2, Constants.Swerve.Mod2.constants), // back left
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)  // back right
+                new SwerveModule(0, Constants.Swerve.Mod0.constants), // front left
+                new SwerveModule(1, Constants.Swerve.Mod1.constants), // front right
+                new SwerveModule(2, Constants.Swerve.Mod2.constants), // back left
+                new SwerveModule(3, Constants.Swerve.Mod3.constants) // back right
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
 
+        try {
+            Constants.config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+
         // New AutoBuuilder stuff for 2025
         AutoBuilder.configure(
-            this::getPose, // Robot pose supplier
-            this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE // MAY NOT BE ROBOT RELATIVE!!!!
-            (speeds/*, feedforwards*/) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                new PIDConstants(1.5, 0.0, 0.0, 0.0), // 6 // 2 // Translation PID Constants
-                new PIDConstants(1.5, 0.0, 0.0, 0.0) // 6 // 3 // Rotation PID Constants
-            ),
-            Constants.config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+                this::getPose, // Robot pose supplier
+                this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE // MAY NOT BE ROBOT
+                                // RELATIVE!!!!
+                (speeds/* , feedforwards */) -> driveRobotRelative(speeds), // Method that will drive the robot given
+                                                                            // ROBOT RELATIVE ChassisSpeeds. Also
+                                                                            // optionally outputs individual module
+                                                                            // feedforwards
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for
+                                                // holonomic drive trains
+                        new PIDConstants(1.5, 0.0, 0.0, 0.0), // 6 // 2 // Translation PID Constants
+                        new PIDConstants(1.5, 0.0, 0.0, 0.0) // 6 // 3 // Rotation PID Constants
+                ),
+                Constants.config, // The robot configuration
+                () -> {
+                    // Boolean supplier that controls when the path will be mirrored for the red
+                    // alliance
+                    // This will flip the path being followed to the red side of the field.
+                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this // Reference to this subsystem to set requirements
         );
 
         BaseStatusSignal.setUpdateFrequencyForAll(250,
-            mSwerveMods[0].mDriveMotor.getPosition(),
-            mSwerveMods[0].mDriveMotor.getVelocity(),
-            mSwerveMods[0].mDriveMotor.getMotorVoltage());
+                mSwerveMods[0].mDriveMotor.getPosition(),
+                mSwerveMods[0].mDriveMotor.getVelocity(),
+                mSwerveMods[0].mDriveMotor.getMotorVoltage());
 
-            mSwerveMods[0].mDriveMotor.optimizeBusUtilization();
+        mSwerveMods[0].mDriveMotor.optimizeBusUtilization();
 
-            SignalLogger.start();
-            
+        SignalLogger.start();
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
-        SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation, 
-                                    getHeading()
-                                )
-                                : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
-                                    rotation)
-                                );
+                        translation.getX(),
+                        translation.getY(),
+                        rotation,
+                        getHeading())
+                        : new ChassisSpeeds(
+                                translation.getX(),
+                                translation.getY(),
+                                rotation));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
 
     public void driveLeft() {
         drive(new Translation2d(0, 0.3), 0, true, false);
@@ -222,35 +241,35 @@ public class Swerve extends SubsystemBase {
         drive(new Translation2d(-0.3, 0), 0, true, false);
     }
     // public void driveRobotRelative(ChassisSpeeds autoChassisSpeeds) {
-    //     SwerveModuleState[] swerveModuleStates =
-    //         Constants.Swerve.swerveKinematics.toSwerveModuleStates(autoChassisSpeeds);
-    //     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+    // SwerveModuleState[] swerveModuleStates =
+    // Constants.Swerve.swerveKinematics.toSwerveModuleStates(autoChassisSpeeds);
+    // SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates,
+    // Constants.Swerve.maxSpeed);
 
-    //     for(SwerveModule mod : mSwerveMods){
-    //         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
-    //     }
+    // for(SwerveModule mod : mSwerveMods){
+    // mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+    // }
     // }
 
-    
-  public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
-    ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
 
-    SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
-    setModuleStates(targetStates);
-  }
-  
+        SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+        setModuleStates(targetStates);
+    }
+
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-        
-        for(SwerveModule mod : mSwerveMods){
+
+        for (SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
         }
     }
 
-    public SwerveModuleState[] getModuleStates(){
+    public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             states[mod.moduleNumber] = mod.getState();
         }
         return states;
@@ -259,14 +278,14 @@ public class Swerve extends SubsystemBase {
     public SwerveModuleState[] getSwerveModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[mSwerveMods.length];
         for (int i = 0; i < mSwerveMods.length; i++) {
-          states[i] = mSwerveMods[i].getState();
+            states[i] = mSwerveMods[i].getState();
         }
         return states;
-      }
+    }
 
-    public SwerveModulePosition[] getModulePositions(){
+    public SwerveModulePosition[] getModulePositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             positions[mod.moduleNumber] = mod.getPosition();
         }
         return positions;
@@ -279,13 +298,13 @@ public class Swerve extends SubsystemBase {
     public SwerveModulePosition[] getPositions() {
         SwerveModulePosition[] positions = new SwerveModulePosition[mSwerveMods.length];
         for (int i = 0; i < mSwerveMods.length; i++) {
-          positions[i] = mSwerveMods[i].getPosition();
+            positions[i] = mSwerveMods[i].getPosition();
         }
         return positions;
-      }
+    }
 
     public void setPose(Pose2d pose) {
-        //swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        // swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
         swerveOdometry.resetPosition(gyro.getRotation2d(), getPositions(), pose);
 
     }
@@ -294,24 +313,26 @@ public class Swerve extends SubsystemBase {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
 
-    public Rotation2d getHeading(){
+    public Rotation2d getHeading() {
         return getPose().getRotation();
     }
 
-    public void setHeading(Rotation2d heading){
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    public void setHeading(Rotation2d heading) {
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
+                new Pose2d(getPose().getTranslation(), heading));
     }
 
-    public void zeroHeading(){
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    public void zeroHeading() {
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(),
+                new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
     public Rotation2d getGyroYaw() {
         return gyro.getRotation2d();
     }
 
-    public void resetModulesToAbsolute(){
-        for(SwerveModule mod : mSwerveMods){
+    public void resetModulesToAbsolute() {
+        for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
     }
@@ -319,18 +340,18 @@ public class Swerve extends SubsystemBase {
     // Limelight
     public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-vision");
     // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 31; 
+    double limelightMountAngleDegrees = 31;
 
     // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 10.25; 
+    double limelightLensHeightInches = 10.25;
 
     // distance from the target to the floor
-    public double goalHeightInches = 53.875; //58
+    public double goalHeightInches = 53.875; // 58
 
     public double stageHeightInches = 48.8125; // UNUSED
 
-    //calculate distance from speaker
-    public double calculateDistanceFromSpeaker() { 
+    // calculate distance from speaker
+    public double calculateDistanceFromSpeaker() {
         NetworkTableEntry ty = table.getEntry("ty");
         double targetOffsetAngle_Vertical = ty.getDouble(0.0);
         double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
@@ -338,58 +359,63 @@ public class Swerve extends SubsystemBase {
         return (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
     }
 
-    //calculate angle to speaker
-    // public double calculateAngleToSpeaker() { 
-    //     NetworkTableEntry ty = table.getEntry("ty");
-    //     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
-    //     double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-    //     //double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-    //     return angleToGoalDegrees;
+    // calculate angle to speaker
+    // public double calculateAngleToSpeaker() {
+    // NetworkTableEntry ty = table.getEntry("ty");
+    // double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+    // double angleToGoalDegrees = limelightMountAngleDegrees +
+    // targetOffsetAngle_Vertical;
+    // //double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+    // return angleToGoalDegrees;
     // }
 
     // simple proportional turning control with Limelight.
-    // "proportional control" is a control algorithm in which the output is proportional to the error.
-    // in this case, we are going to return an angular velocity that is proportional to the 
+    // "proportional control" is a control algorithm in which the output is
+    // proportional to the error.
+    // in this case, we are going to return an angular velocity that is proportional
+    // to the
     // "tx" value from the Limelight.
-    public double limelight_aim_proportional()
-    {    
+    public double limelight_aim_proportional() {
         // kP (constant of proportionality)
-        // this is a hand-tuned number that determines the aggressiveness of our proportional control loop
+        // this is a hand-tuned number that determines the aggressiveness of our
+        // proportional control loop
         // if it is too high, the robot will oscillate around.
         // if it is too low, the robot will never reach its target
         // if the robot never turns in the correct direction, kP should be inverted.
         double kP = 0.025; // 0.001 // 0.02 // 0.025
 
-        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the
+        // rightmost edge of
         // your limelight 3 feed, tx should return roughly 31 degrees.
         double targetingAngularVelocity = table.getEntry("tx").getDouble(0.0) * kP;
 
         // convert to radians per second for our drive method
         targetingAngularVelocity *= (Math.PI * 2); // 12 // 2
 
-        //invert since tx is positive when the target is to the right of the crosshair
+        // invert since tx is positive when the target is to the right of the crosshair
         targetingAngularVelocity *= -1.0;
 
         return targetingAngularVelocity;
     }
 
-    public double limelight_aim_pass()
-    {    
+    public double limelight_aim_pass() {
         // kP (constant of proportionality)
-        // this is a hand-tuned number that determines the aggressiveness of our proportional control loop
+        // this is a hand-tuned number that determines the aggressiveness of our
+        // proportional control loop
         // if it is too high, the robot will oscillate around.
         // if it is too low, the robot will never reach its target
         // if the robot never turns in the correct direction, kP should be inverted.
         double kP = .002;
 
-        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the
+        // rightmost edge of
         // your limelight 3 feed, tx should return roughly 31 degrees.
         double targetingAngularVelocity = table.getEntry("tx").getDouble(0.0) + 15 * kP;
 
         // convert to radians per second for our drive method
         targetingAngularVelocity *= (Math.PI * 12);
 
-        //invert since tx is positive when the target is to the right of the crosshair
+        // invert since tx is positive when the target is to the right of the crosshair
         targetingAngularVelocity *= -1.0;
 
         return targetingAngularVelocity;
@@ -397,44 +423,43 @@ public class Swerve extends SubsystemBase {
 
     public Command limeLightAutoAlign() {
         return run(
-            () -> {
-                double rotationValue = limelight_aim_proportional();
-                drive(
-                    new Translation2d(0, 0), 
-                    rotationValue, 
-                    false,
-                    true
-                );
-            }
-        );
-        // .until(() -> {return table.getEntry("tx").getDouble(0.0) > -0.05 && table.getEntry("tx").getDouble(0.0) < 0.05;});
+                () -> {
+                    double rotationValue = limelight_aim_proportional();
+                    drive(
+                            new Translation2d(0, 0),
+                            rotationValue,
+                            false,
+                            true);
+                });
+        // .until(() -> {return table.getEntry("tx").getDouble(0.0) > -0.05 &&
+        // table.getEntry("tx").getDouble(0.0) < 0.05;});
     }
 
     public Command limelightStageAlign() {
         return run(
-            () -> {
-                double rotationValue = limelight_aim_proportional() + 15;
-                drive(
-                    new Translation2d(0, 0), 
-                    rotationValue, 
-                    false,
-                    true
-                );
-            }
-        );
-        // .until(() -> {return table.getEntry("tx").getDouble(0.0) > -0.05 && table.getEntry("tx").getDouble(0.0) < 0.05;});
+                () -> {
+                    double rotationValue = limelight_aim_proportional() + 15;
+                    drive(
+                            new Translation2d(0, 0),
+                            rotationValue,
+                            false,
+                            true);
+                });
+        // .until(() -> {return table.getEntry("tx").getDouble(0.0) > -0.05 &&
+        // table.getEntry("tx").getDouble(0.0) < 0.05;});
     }
 
     @Override
-    public void periodic(){
-        //double distanceFromSpeaker = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    public void periodic() {
+        // double distanceFromSpeaker = (goalHeightInches - limelightLensHeightInches) /
+        // Math.tan(angleToGoalRadians);
         swerveOdometry.update(getGyroYaw(), getModulePositions());
         SmartDashboard.putNumber("Gyro", getGyroYaw().getDegrees());
 
-        for(SwerveModule mod : mSwerveMods){
+        for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
 
         SmartDashboard.putNumber("Odometry X", swerveOdometry.getPoseMeters().getX());
@@ -447,5 +472,3 @@ public class Swerve extends SubsystemBase {
     }
 
 }
-
-

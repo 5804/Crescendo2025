@@ -15,14 +15,8 @@ import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
 
-    public static RobotConfig config; {
-        try{
-            config = RobotConfig.fromGUISettings();
-        } catch (Exception e) {
-            // Handle exception as needed
-            e.printStackTrace();}
-    }
-
+    public static RobotConfig config;
+ 
     public static final double speedMultiplier = 1; // Should be a value between 0 (not moving) and 1 (full speed) // SAMANTHA THIS IS THE VALUE THAT YOU CHANGE TO ADJUST THE MAX SPEED
     
     public static final double stickDeadband = 0.2; // 0.1
