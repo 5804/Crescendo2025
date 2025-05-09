@@ -310,11 +310,11 @@ public class RobotContainer {
             
         driver.leftTrigger(.2).whileTrue(smartIntake());
 
-        driver.leftBumper().onTrue(new InstantCommand(() -> {shooterSubsystem.deactivateRatchet();}));
+        // driver.leftBumper().onTrue(new InstantCommand(() -> {shooterSubsystem.deactivateRatchet();}));
 
         // CLIMB - DISABLE WHEN IT'S NOT A COMPETITION
-        driver.rightBumper().whileTrue(smartClimb());
-        driver.rightBumper().onTrue(LEDSubsystem.Red());
+        // driver.rightBumper().whileTrue(smartClimb());
+        // driver.rightBumper().onTrue(LEDSubsystem.Red());
 
         driver.back().whileTrue(limelightAutoAlignAndFireAtAmp()); 
 
